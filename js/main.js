@@ -11,29 +11,20 @@ const track = document.querySelector(".carypto-track");
 const slides = document.querySelectorAll(".carypto-card");
 
 let index = 0;
+const slideWidth = 220 + 28; // カード幅220px + gap28px
 
 setInterval(() => {
-
   index++;
 
   track.style.transition = "transform 0.7s ease";
-  track.style.transform =
-    `translateX(-${index * 100}%)`;
+  track.style.transform = `translateX(-${index * slideWidth}px)`;
 
-  // 最後のコピー画像に来たら
-  if(index === slides.length - 1){
-
+  if (index >= slides.length - 1) {
     setTimeout(() => {
-
       track.style.transition = "none";
-
       index = 0;
-
-      track.style.transform =
-        `translateX(0%)`;
-
+      track.style.transform = "translateX(0)";
     }, 700);
-
   }
 
 }, 3000);
