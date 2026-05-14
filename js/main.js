@@ -32,3 +32,19 @@ if (track && slides.length > 0) {
     }
   }, 3000);
 }
+
+const slideUpItems = document.querySelectorAll(".slide-up");
+
+const slideUpObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("show");
+    }
+  });
+}, {
+  threshold: 0.3
+});
+
+slideUpItems.forEach((item) => {
+  slideUpObserver.observe(item);
+});
