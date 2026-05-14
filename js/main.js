@@ -31,7 +31,7 @@ setInterval(() => {
   track.style.transform =
     `translateX(-${index * slideWidth}px)`;
 
-  if(index >= slides.length - 5){
+  if(index >= slides.length - 6){
 
     setTimeout(() => {
 
