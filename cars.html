@@ -44,11 +44,79 @@
   <h2>販売車紹介</h2>
 </div>
 
+<div id="car-list" class="car-list">
+  <p>販売車を読み込み中...</p>
+</div>
 
   </div>
 
 </section>
 
 <script src="js/main.js"></script>
+<script>
+async function loadCars() {
+  const carList = document.getElementById("car-list");
+
+  try {
+    const response = await fetch("/api/cars");
+
+    if (!response.ok) {
+      throw new Error("データの取得に失敗しました");
+    }
+
+    const data = await response.json();
+
+    carList.innerHTML = "";
+
+    data.contents.forEach(car => {
+
+      const carCard = document.createElement("div");
+      carCard.className = "car-card";
+
+      carCard.innerHTML = `
+        <div class="car-image">
+          ${
+            car.image
+              ? `<img src="${car.image.url}" alt="${car.name}">`
+              : ""
+          }
+        </div>
+
+        <div class="car-info">
+
+          ${car.sold ? '<p class="car-sold">SOLD OUT</p>' : ''}
+
+          <p class="car-maker">${car.maker || ""}</p>
+
+          <h3>${car.name || ""}</h3>
+
+          <div class="car-details">
+            <p>年式：${car.year || "-"}</p>
+            <p>走行距離：${car.mileage || "-"}</p>
+            <p>車検：${car.inspection || "-"}</p>
+          </div>
+
+          <p class="car-price">${car.price || ""}</p>
+
+          <p class="car-description">
+            ${car.description || ""}
+          </p>
+
+        </div>
+      `;
+
+      carList.appendChild(carCard);
+    });
+
+  } catch (error) {
+    console.error(error);
+
+    carList.innerHTML =
+      "<p>販売車情報を取得できませんでした。</p>";
+  }
+}
+
+loadCars();
+</script>
 </body>
 </html>
